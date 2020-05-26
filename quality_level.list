@@ -47,11 +47,8 @@ stereo_msgs
 trajectory_msgs
 unique_identifier_msgs
 visualization_msgs
-connext
-cyclonedds
+rmw_connext
+rmw_cyclonedds
 fastcdr
 fastrtps
-foonathan_memory
-libyaml
-spdlog
 tracetools
