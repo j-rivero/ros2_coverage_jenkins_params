@@ -17,7 +17,7 @@ import sys
 
 def get_proposed_packages_repo_names(pkg_name_list):
     index = get_index('https://raw.githubusercontent.com/ros/rosdistro/master/index.yaml')
-    dist_cache = get_distribution_cache(index, 'eloquent')
+    dist_cache = get_distribution_cache(index, 'foxy')
     dist_file = dist_cache.distribution_file
 
     repositories = []
@@ -36,8 +36,20 @@ def get_proposed_packages_repo_names(pkg_name_list):
                 release_repo = 'ros2/system_tests'
             elif pkg_name.startswith('tf2_'):
                 release_repo = 'ros2/geometry2'
+            elif pkg_name.startswith('libstatistics_collector') or pkg_name.startswith('statistics_'):
+                release_repo = 'ros-tooling/libstatistics_collector'
+            elif pkg_name.startswith('rmw_dds_common'):
+                release_repo = 'ros2/rmw_dds_common'
+            elif pkg_name.startswith('rosidl_runtime_c'):
+                release_repo = 'ros2/rosidl'
+            elif pkg_name.startswith('rmw_cyclonedds'):
+                release_repo = 'ros2/rmw_cyclonedds'
+            elif pkg_name.startswith('rmw_connext'):
+                release_repo = 'ros2/rmw_connext'
+            elif pkg_name.startswith('rmw_fastcdr'):
+                release_repo = 'eProsima/Fast-CDR'
             else:
-                raise Exception("package " + pkg_name + " not found in eloquent release. Might need to add code manually")
+                raise Exception("package " + pkg_name + " not found in foxy release. Might need to add code manually")
         repositories.append(release_repo)
     return list(dict.fromkeys(repositories))
 
