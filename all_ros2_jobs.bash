@@ -42,10 +42,10 @@ for pkg in ${ALL_ROS2_PKGS}; do
 	continue
     fi
     # check the run and test dependencies of the package
-    echo -n "     - check reverse test+run deps: "
-    run_deps=$(colcon info ${pkg} | grep 'run: ' | sed 's/.*run: //')
+    echo -n "     - check reverse test deps: "
+    #run_deps=$(colcon info ${pkg} | grep 'run: ' | sed 's/.*run: //')
     test_deps=$(colcon info ${pkg} | grep 'test: ' | sed 's/.*test: //')
-    total_deps=$(remove_string_dups "$run_deps $test_deps")
+    total_deps=$(remove_string_dups "$test_deps")
     echo "${total_deps}"
 
     testing_set=
