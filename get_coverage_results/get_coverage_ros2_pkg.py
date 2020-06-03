@@ -34,7 +34,7 @@ for e in coverage_entries:
     elif name_parts[0].startswith('build') or name_parts[0].startswith('test'):
         package_under_cov = name_parts[1]
     elif name_parts[0].startswith('src'):
-        package_under_cov = name_parts[2]
+        package_under_cov = name_parts[3]
     elif name_parts[0].startswith('launch'):
         package_under_cov = name_parts[0]
     elif name_parts[0].startswith('ros2'):
@@ -55,10 +55,17 @@ for e in coverage_entries:
         pprint(name_parts)
         continue
 
+    found = False
     if package_under_cov == input_pkg:
+        found = True
+    else:
+        # Try other metrics to fidn it
+        if name_parts[0].startswith('src') and '.' + input_pkg + '.' in entry_name:
+            found = True
+
+    if found:
         total_lines_under_testing += lines_coverage['denominator']
         total_lines_tested += lines_coverage['numerator']
-
         print(" * %s [%04.2f] -- %i/%i" % (
               entry_name,
               lines_coverage['ratio'],
@@ -67,7 +74,7 @@ for e in coverage_entries:
 
 
 if (total_lines_under_testing == 0):
-    print("Package not found")
+    print("Package not found: " + input_pkg)
     sys.exit(-1)
 
 print("\nCombined unit testing: %04.2f%% %i/%i" % (
