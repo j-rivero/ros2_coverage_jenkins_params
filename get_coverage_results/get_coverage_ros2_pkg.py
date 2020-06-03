@@ -1,8 +1,9 @@
+#!/usr/bin/python3
+
 import json
 from pprint import pprint
 import requests
 import sys
-
 
 if len(sys.argv) < 3:
     print('Usage: ' + sys.argv[0] + '<jenkins_coverage_build>' + '<ros_package>')
@@ -73,8 +74,3 @@ print("\nCombined unit testing: %04.2f%% %i/%i" % (
     total_lines_tested / total_lines_under_testing * 100,
     total_lines_tested,
     total_lines_under_testing))
-
-# json
-# - children
-
-# - elements (final results)
