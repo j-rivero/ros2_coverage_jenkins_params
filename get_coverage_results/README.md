@@ -10,5 +10,5 @@ unit testing.
   $ ./get_coverage_ros2_pkg.py <jenkins_build_url> <ros2_package_name>
 
 Example:
-  $ ./get_coverage_ros2_pkg.py https://ci.ros2.org/job/ci_linux_coverage/176 rclcpp
+  $ ./get_coverage_ros2_pkg.py https://ci.ros2.org/job/ci_linux_coverage/182 rclcpp
 ```
