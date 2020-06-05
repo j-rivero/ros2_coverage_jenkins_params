@@ -33,8 +33,6 @@ for e in coverage_entries:
         package_under_cov = name_parts[0]
     elif name_parts[0].startswith('build') or name_parts[0].startswith('test'):
         package_under_cov = name_parts[1]
-    elif name_parts[0].startswith('src'):
-        package_under_cov = name_parts[3]
     elif name_parts[0].startswith('launch'):
         package_under_cov = name_parts[0]
     elif name_parts[0].startswith('ros2'):
@@ -50,6 +48,8 @@ for e in coverage_entries:
     elif name_parts[0].startswith('install'):
         # integration/system testing, out by now
         continue
+    elif name_parts[0].startswith('src'):
+        package_under_cov = name_parts[2]
     else:
         print('UNEXPECTED: ' + name_parts[0])
         pprint(name_parts)
@@ -77,7 +77,8 @@ if (total_lines_under_testing == 0):
     print("Package not found: " + input_pkg)
     sys.exit(-1)
 
-print("\nCombined unit testing: %04.2f%% %i/%i" % (
+print("\nCombined unit testing for %s: %04.2f%% %i/%i" % (
+    input_pkg,
     total_lines_tested / total_lines_under_testing * 100,
     total_lines_tested,
     total_lines_under_testing))
