@@ -49,7 +49,10 @@ for e in coverage_entries:
         # integration/system testing, out by now
         continue
     elif name_parts[0].startswith('src'):
-        package_under_cov = name_parts[2]
+        if len(name_parts) > 4:
+            package_under_cov = name_parts[3]
+        else:
+            package_under_cov = name_parts[2]
     else:
         print('UNEXPECTED: ' + name_parts[0])
         pprint(name_parts)
