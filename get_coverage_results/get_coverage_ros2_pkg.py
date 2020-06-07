@@ -76,7 +76,7 @@ for e in coverage_entries:
               lines_coverage['denominator']))
 
 
-if (total_lines_under_testing == 0):
+if total_lines_under_testing == 0:
     print("Package not found: " + input_pkg)
     sys.exit(-1)
 
