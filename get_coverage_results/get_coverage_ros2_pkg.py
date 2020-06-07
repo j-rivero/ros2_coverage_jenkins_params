@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 
 import json
-from pprint import pprint
+import argparse
 import requests
 import sys
 
-if len(sys.argv) < 3:
-    print('Usage: ' + sys.argv[0] + '<jenkins_coverage_build>' + '<ros_package>')
+parser = argparse.ArgumentParser()
+parser.add_argument("jenkins_coverage_build", help="URL of a ci.ro2s.org build using coverage (i.e https://ci.ros2.org/job/ci_linux_coverage/182)")
+parser.add_argument("ros_package", help="ROS package name to get the coverage rate from (i.e: rcutils)")
+args = parser.parse_args()
 
-input_url = sys.argv[1]
-input_pkg = sys.argv[2]
+input_url = args.jenkins_coverage_build
+input_pkg = args.ros_package
 
 r = requests.get(url=input_url + '/cobertura/api/json?depth=3')
 if r.status_code != 200:
@@ -55,7 +57,6 @@ for e in coverage_entries:
             package_under_cov = name_parts[2]
     else:
         print('UNEXPECTED: ' + name_parts[0])
-        pprint(name_parts)
         continue
 
     found = False
