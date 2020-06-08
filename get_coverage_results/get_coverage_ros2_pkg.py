@@ -30,7 +30,7 @@ def create_colcon_workspace():
     if not os.path.isdir(ros2_ws_path):
         os.mkdir(ros2_ws_path)
         ros2_repos = requests.get('https://raw.githubusercontent.com/ros2/ros2/master/ros2.repos')
-        if ros2_repos.status_code != 200:
+        if ros2_repos.status_code != requests.codes.ok:
             print('Failed to download ros2.repos file', file=sys.stderr)
             sys.exit(-1)
         with open(ros2_repos_path, "wb") as file:
@@ -41,7 +41,7 @@ def create_colcon_workspace():
         print('Getting ros2.repos sources to get packages source paths. Please wait')
         subprocess.check_output(cmd)
     except subprocess.CalledProcessError as e:
-        print(e.output, file=sys.stderr())
+        print(e.output, file=sys.stderr)
         sys.exit(-1)
 
     return ros2_ws_path
@@ -52,18 +52,18 @@ def get_src_path(package_name, colcon_ws):
     try:
         path = subprocess.check_output(cmd).decode('ascii').strip()
     except subprocess.CalledProcessError as e:
-        print(e.output, file=sys.stderr())
+        print(e.output, file=sys.stderr)
         sys.exit(-1)
     # Check if found
     if not path:
-        print("Package not found: " + input_pkg)
+        print("Package not found: " + input_pkg, file=sys.stderr)
         sys.exit(-1)
     return path
 
 
 r = requests.get(url=input_url + '/cobertura/api/json?depth=3')
 if r.status_code != 200:
-    print('Wrong input URL')
+    print("Wrong input URL " + input_url, file=sys.stderr)
     sys.exit(-1)
 
 ros2_ws_path = create_colcon_workspace()
@@ -112,7 +112,7 @@ for e in coverage_entries:
 
 
 if total_lines_under_testing == 0:
-    print("Package not found: " + input_pkg)
+    print("Package not found: " + input_pkg, file=sys.stderr)
     sys.exit(-1)
 
 print("\nCombined unit testing for %s: %04.2f%% %i/%i" % (
